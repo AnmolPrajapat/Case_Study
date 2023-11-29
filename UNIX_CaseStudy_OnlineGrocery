@@ -1,0 +1,49 @@
+Problem 1: 
+touch Product.txt;
+
+echo "Product ID, Product Name, Product Price , Product Quantity" >> Product.txt
+echo "1, Laptop, 5000, 3" >> Product.txt
+echo "2, Printer, 3000, 6" >> Product.txt
+echo "3, Headphones, 1500, 8" >> Product.txt
+echo "4, Tablet, 7000, 9" >> Product.txt
+echo "5, Sunglasses, 2000, 2" >> Product.txt
+
+awk 'NR==1; NR>1{print $0 | "sort -t\",\" -k2,2"}' Product.txt > tmp_sorted.txt 
+cat tmp_sorted.txt
+​
+Problem 2:
+touch Product.txt
+
+echo "Product ID, Product Name, Product Price , Product Quantity" >> Product.txt
+echo "1,Laptop, 5000, 3" >> Product.txt
+echo "2,Printer, 3000, 6" >> Product.txt
+echo "3,Headphones, 1500, 8" >> Product.txt
+echo "4,Tablet, 7000, 9" >> Product.txt
+echo "5,Sunglasses, 2000, 2" >> Product.txt
+awk -F',' '
+{
+    if ($2 == "Laptop") {
+        productFound = 1;
+    }
+}
+END {
+    if (productFound) {
+        print "Product name found";
+    } else {
+        print "Product name not found";
+    }
+}' Product.txt
+​
+Problem 3:
+touch Product.txt;
+echo "Product ID, Product Name, Product Price , Product Quantity" >> Product.txt
+echo "1, Laptop, 5000, 3" >> Product.txt
+echo "2, Printer, 3000, 6" >> Product.txt
+echo "3, Headphones, 1500, 8" >> Product.txt
+echo "4, Tablet, 7000, 9" >> Product.txt
+echo "5, Sunglasses, 2000, 2" >> Product.txt
+search="Tablet"
+replace="Smartphone"
+awk -F', ' -v search="$search" -v replace="$replace" 'BEGIN {OFS=FS} NR>1 && tolower($2) == tolower(search) {$2 = replace} {print}' Product.txt > tmp_sorted.txt
+
+cat tmp_sorted.txt
