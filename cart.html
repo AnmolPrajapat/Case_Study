@@ -1,0 +1,205 @@
+//cart.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    
+    <script>
+
+        function checkLoggedIn(){
+          console.log(sessionStorage.getItem("isloggedIn"))
+          if (sessionStorage.getItem("isloggedIn")!=null){
+            document.getElementById("login_or_logout").innerHTML = "Logout";
+          }
+          else{
+            document.getElementById("login_or_logout").innerHTML = "Login";
+          }
+        }
+        function commitLogout(){
+          if (document.getElementById("login_or_logout").innerHTML == "Logout"){
+            sessionStorage.removeItem("isloggedIn");
+            sessionStorage.removeItem("cust_database");
+            window.location.href="login.html";
+          }
+          if (document.getElementById("login_or_logout").innerHTML == "Login"){
+            window.location.href="login.html";
+          }
+          
+        }
+
+        // Sample data array
+        const prevdata = [
+          { id_no:1, title: 'Fresh Apples', price: '350', imgurl:"apples.jpeg" },
+          { id_no:2, title: 'Fresh Mangoes', price: '300', imgurl:"mangoes.jpeg" },
+          { id_no:3, title: 'Rice ', price: '800', imgurl:"rice.jpg" },
+          // Add more data as needed
+        ];
+
+        if (window.sessionStorage.getItem("cartData")==null){
+          window.sessionStorage.setItem("cartData",JSON.stringify(prevdata))
+        }
+        
+        data = JSON.parse(sessionStorage.getItem("cartData"))
+        console.log(data)
+       
+        function onDeleteProd(id_no){
+          //console.log(id_no)
+          for(var i=0; i<=data.length; i++){
+            if(data[i].id_no==id_no){
+              var elementToRemove = data[i]
+              break;
+            }
+          }
+          let index = data.indexOf(elementToRemove)
+          if (index>-1){
+            data.splice(index,1);
+          }
+          console.log(data)
+          window.sessionStorage.setItem("cartData",JSON.stringify(data))
+          window.location.reload()
+        }
+        // Function to create Bootstrap cards
+        function createCard(title, price, imgurl, id_no) {
+          const card = document.createElement('div');
+          card.className = 'card col-md-4 mb-3';
+          card.innerHTML = `
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="${imgurl}" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text" id = "prod_name">${title}</p>
+                    <ul class="list-group list-group-flush">
+                    
+                    <li class="list-group-item">Price: Rs. <span id = "prod_price">${price}</span></li>
+                    </ul>
+                    <button id=deleteItem${id_no} onclick = "onDeleteProd(${id_no})" class= "btn btn-danger">Delete</button>
+                </div>
+                <div class = "cardContainer" id = "cardContainer"> </div>
+            </div>
+          `;
+          
+          //const delete_button = document.getElementById(`deleteItem${id_no}`)
+          //console.log(delete_button, title, `deleteItem${id_no}`)
+          //delete_button.onclick= onDeleteProd(title);
+          
+          return card;
+        }
+        
+        function createSummaryItems(title, price) {
+          const grocery_item = document.createElement('li');
+         
+          grocery_item.innerHTML = `
+          ${title} : ${price}
+          `
+          return grocery_item;
+        }
+        // Function to populate cards in the container
+        function populateCards() {
+          const cardContainer = document.getElementById('cardContainer');
+          const summary = document.getElementById('summary')
+          const totalsummary = document.getElementById('total_summary')
+          var total = 0
+          console.log(summary)
+       
+          data.forEach(item => {
+            const card = createCard(item.title, item.price, item.imgurl, item.id_no);
+            cardContainer.appendChild(card);
+            const grocery_item = createSummaryItems(item.title,item.price);
+            grocery_item.classList.add("list-group-item");
+            grocery_item.classList.add("list-group-item-dark");
+            summary.appendChild(grocery_item)
+
+            total = total + parseInt(item.price)
+          });
+          totalsummary.innerHTML = `<div class="totalBox">Total: ${total}</div>` 
+        }
+       
+        // Call the function to populate cards
+        
+      </script>
+    
+    <title>Cart</title>
+</head>
+<body onload="populateCards(); checkLoggedIn();">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="home.html"><img style="width: 3em; margin-left: 3em; margin-right: 3em; filter: drop-shadow(5px 5px 5px #222); " src="logo2.png"></img></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="home.html">Home <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="register.html"> Register <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="profile.html"> Profile <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="cart.html">  <span class="sr-only"></span><span class="material-symbols-outlined">
+                    shopping_cart
+                    </span></a>
+              </li>
+            <li class="nav-item active">
+              <div class="nav-link"> <span id="login_or_logout" onclick = "commitLogout()">Login</span> <span class="sr-only"></span></div>
+            </li>
+      
+          </ul>
+        </div>
+    </nav>
+    <div class="shoppingCartParent">
+        <div class="productsInCart">
+             <!--
+            <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="apples.jpeg" alt="Card image cap">
+            <div class="card-body">
+                <p class="card-text" id = "prod_name">Fresh Apples</p>
+                <ul class="list-group list-group-flush">
+                
+                <li class="list-group-item">Price: Rs. <span id = "prod_price">20</span></li>
+                </ul>
+
+            </div>
+            <div class = "cardContainer" id = "cardContainer"> </div>
+            </div>
+            -->
+            <div class="">
+                <ul id="cardContainer">
+
+                </ul>
+            </div>
+
+        </div>
+        <div class="checkout">
+            <div style="width: 100%;">
+                <div style="display: flex; flex-direction: column; width: 100%;">
+                  <h4>Order Summary</h4>
+                  <ul id="summary" class="list-group list-group-flush">
+                    
+                  </ul>
+                </div>
+                <div id="total_summary">
+                  
+                </div>
+                <div style="margin-top:1em">
+                  <button class="btn btn-success" onclick="checkout()">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
