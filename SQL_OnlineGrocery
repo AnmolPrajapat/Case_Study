@@ -1,0 +1,145 @@
+```jsx
+//https://www.mycompiler.io/new/sql
+
+Create table login(
+    customer_id int not null,
+    last_login datetime not null,
+    last_logout datetime not null,
+    updated_password varchar(50) not null,
+    old_password varchar(50) not null,
+    is_now_logged_in varchar(1) not null
+);
+
+-- Inserting sample data into the login table
+INSERT INTO login (customer_id, last_login, last_logout, updated_password, old_password, is_now_logged_in)
+VALUES
+    (1, '2023-11-19 08:30:00', '2023-11-19 17:45:00', 'newpass123', 'oldpass456', 'Y'),
+    (2, '2023-11-18 10:00:00', '2023-11-18 18:20:00', 'newpass789', 'oldpass987', 'N'),
+    (3, '2023-11-19 12:45:00', '2023-11-19 20:00:00', 'password321', 'password123', 'Y'),
+    (4, '2023-11-18 15:20:00', '2023-11-18 22:10:00', 'pass456', 'pass123', 'Y'),
+    (5, '2023-11-19 09:00:00', '2023-11-19 18:30:00', 'newpass777', 'oldpass999', 'N'),
+    (6, '2023-11-18 11:30:00', '2023-11-18 20:45:00', 'passwordABC', 'passwordXYZ', 'Y'),
+    (7, '2023-11-19 14:15:00', '2023-11-19 23:00:00', 'securepass321', 'securepass123', 'Y'),
+    (8, '2023-11-18 08:45:00', '2023-11-18 17:20:00', 'mynewpass', 'myoldpass', 'N'),
+    (9, '2023-11-19 10:10:00', '2023-11-19 19:40:00', 'password456', 'password789', 'Y'),
+    (10, '2023-11-18 12:30:00', '2023-11-18 21:15:00', 'newpassword123', 'oldpassword789', 'Y'),
+    (11, '2023-11-19 16:00:00', '2023-11-19 23:45:00', 'password999', 'password000', 'N'),
+    (12, '2023-11-18 13:45:00', '2023-11-18 22:30:00', 'superpass123', 'superpass456', 'Y'),
+    (13, '2023-11-19 07:20:00', '2023-11-19 16:50:00', 'newpass654', 'oldpass321', 'N'),
+    (14, '2023-11-18 17:00:00', '2023-11-18 23:59:00', 'passwordXYZ', 'passwordABC', 'Y'),
+    (15, '2023-11-19 11:30:00', '2023-11-19 21:00:00', 'pass1234', 'pass5678', 'N'),
+    (16, '2023-11-18 09:40:00', '2023-11-18 18:00:00', 'mypassword', 'oldpassword', 'Y'),
+    (17, '2023-11-19 13:00:00', '2023-11-19 22:30:00', 'securepass999', 'securepass777', 'Y'),
+    (18, '2023-11-18 10:55:00', '2023-11-18 19:25:00', 'newpass111', 'oldpass222', 'N');
+
+Select * from login
+where login.is_now_logged_in == "Y"
+order by login.last_login desc
+Limit (Select Count(*) from login where login.is_now_logged_in == "Y")/2;
+
+(1, '2023-11-19 09:00:00', '2023-11-19 18:30:00', 'abc', 'def', 'N'),
+(2, '2023-11-18 11:30:00', '2023-11-18 20:45:00', 'ghdd', 'fhg', 'Y'),
+(3, '2023-11-19 14:15:00', '2023-11-19 23:00:00', 'bngf', '3fbfr', 'Y'),
+(4, '2023-11-18 08:45:00', '2023-11-18 17:20:00', 'dfdf4', 'vjfk1', 'N'),
+(5, '2023-11-19 10:10:00', '2023-11-19 19:40:00', 'frf12', 'jukju', 'Y'),
+(6, '2023-11-18 12:30:00', '2023-11-18 21:15:00', 'fbhb1', 'bnbn1', 'Y'),
+(7, '2023-11-19 16:00:00', '2023-11-19 23:45:00', 'wewee', 'yui7u', 'N'),
+(8, '2023-11-18 13:45:00', '2023-11-18 22:30:00', '4r4r4', 'bgjbn', 'Y')
+```
+
+```jsx
+-- Create Registration Table
+CREATE TABLE Registration (
+    Customer_ID INT PRIMARY KEY NOT NULL,
+    Customer_Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    Password VARCHAR(50) NOT NULL,
+    Address VARCHAR(200) NOT NULL,
+    Contact_Number INT NOT NULL
+);
+
+-- Inserting dummy data into the Registration table
+INSERT INTO Registration (Customer_ID, Customer_Name, Email, Password, Address, Contact_Number)
+VALUES
+    (1, 'John', 'john@example.com', 'pass123', '123 Main St, Anytown, US', 1234567890),
+    (2, 'Alice', 'alice@example.com', 'pass456', '567 Elm St, New City, India', 9876543210),
+    (3, 'Bob', 'bob@example.com', 'pass789', '999 Maple St, Another City, US', 5556667777),
+    (4, 'Eva', 'eva@example.com', 'pass999', '77 Oak St, Yet Another City, India', 3332221111);
+
+Update Registration
+set customer_name = "US_" || customer_name 
+where address like "%US";
+
+    
+select * from Registration
+```
+
+```jsx
+CREATE TABLE Customer (
+    CustomerID INT PRIMARY KEY NOT NULL,
+    CustomerName VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL
+);
+
+INSERT INTO Customer (CustomerID, CustomerName, Email)
+VALUES
+    (1, 'John Doe', 'john@example.com'),
+    (2, 'Jane Smith', 'jane@example.com'),
+    (3, 'Alice Johnson', 'alice@example.com');
+
+CREATE TABLE Product (
+    ProductID INT PRIMARY KEY NOT NULL,
+    ProductName VARCHAR(255) NOT NULL,
+    Price INT NOT NULL,
+    Quantity INT NOT NULL,
+    Reserved VARCHAR(50) NOT NULL,
+    CustomerID INT REFERENCES Customer(CustomerID) NOT NULL
+);
+INSERT INTO Product (ProductID, ProductName, Price, Quantity, Reserved, CustomerID)
+VALUES
+    (1, 'Apples', 2, 50, 'Not Reserved', 1),
+    (2, 'Bananas', 3, 30, 'Not Reserved', 1),
+    (3, 'Milk', 5, 20, 'Not Reserved', 2),
+    (4, 'Bread', 4, 40, 'Reserved', 2);
+
+SELECT DISTINCT p.ProductID, p.ProductName, p.Price, p.Quantity, p.Reserved, p.CustomerID, c.CustomerName
+FROM Product p
+JOIN Customer c ON p.CustomerID = c.CustomerID;
+```
+
+```jsx
+-- Q4
+CREATE TABLE Transaction_Table (
+    TransactionID INT PRIMARY KEY NOT NULL,
+    CustomerID INT REFERENCES Customer(CustomerID) NOT NULL,
+    ProductID INT REFERENCES Product(ProductID) NOT NULL,
+    TotalAmount INT NOT NULL,
+    no_of_items INT NOT NULL
+);
+INSERT INTO Transaction_Table (TransactionID, CustomerID, ProductID, TotalAmount, no_of_items)
+VALUES
+    (1, 1, 1, 6, 3),
+    (2, 2, 3, 9, 2),
+    (3, 3, 2, 7, 2);
+SELECT *
+FROM Transaction_Table
+ORDER BY TotalAmount DESC
+LIMIT 1 OFFSET 1;
+```
+
+```jsx
+--Q5
+
+CREATE TABLE Admin (
+    AdminID INT PRIMARY KEY NOT NULL,
+    AdminPassword VARCHAR(255) NOT NULL,
+    CustomerID INT REFERENCES Customer(CustomerID) NOT NULL,
+    ProductID INT REFERENCES Product(ProductID) NOT NULL,
+    TransactionID INT REFERENCES Transaction_Table(TransactionID) NOT NULL
+);
+
+SELECT c.CustomerID, c.CustomerName, c.Email, t.TransactionID, p.ProductName
+FROM Customer c
+JOIN Transaction_Table t ON c.CustomerID = t.CustomerID
+JOIN Product p ON t.ProductID = p.ProductID;
+```
