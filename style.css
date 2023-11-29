@@ -1,0 +1,104 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+  }
+  
+  h1 {
+    text-align: center;
+
+  }
+  
+  form {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 500px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 1px;
+    box-sizing: border-box;
+  }
+  
+  input[type="submit"] {
+    background: #f14805;
+    color: #080000;
+    cursor: pointer;
+    margin-top: 0.5em;
+  }
+
+  #loginButton{
+    background: #f14805;
+    color: #080000;
+    cursor: pointer;
+    margin-top: 0.5em;
+  }  
+  
+  .hidden {
+    display: none;
+  }
+  
+  .success {
+    color: #4caf50;
+  }
+
+  #login_or_logout{
+    cursor: pointer;
+  }
+
+  label{
+    margin-top: 0em;
+    margin-bottom: 0em;
+  }
+
+  .material-icons {
+    vertical-align: middle;
+    line-height: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.shoppingCartParent{
+  display: flex;
+  justify-content: center;
+}
+.productsInCart{
+  display: flex;
+  width: 50%;
+  margin:1em;
+}
+.checkout{
+  display: flex;
+  width: 50%;
+  margin:1em;
+}
+
+.productsInCart{
+  display: flex;
+  justify-content: center;
+}
+
+.totalBox{
+  margin-top: 1em;
+  border: dotted 1px rgb(255, 255, 255);
+  padding: 0.5em;
+  background-color: #4caf50;
+  color: white;
+}
+
+.cardContainer{
+  display: flex;
+}
